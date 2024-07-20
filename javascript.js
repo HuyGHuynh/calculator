@@ -33,5 +33,27 @@ let firstNumber = 2;
 let operator = "*";
 let secondNumber = 3;
 
-alert(operate(firstNumber, operator, secondNumber));
+//alert(operate(firstNumber, operator, secondNumber));
 
+const textfield = document.querySelector('#result');
+
+let displayField = ""
+function display(value) {
+    if (displayField.length == 0)
+        displayField = String(value);
+    else
+        displayField += String(value);
+    textfield.value = displayField;
+}
+function setupButton(val) {
+    const button = document.querySelector(`button[value="${val}"]`);
+    button.addEventListener("click", (e) => display(e.target.value));
+}
+for(let i = 1; i <= 9; i++) {
+    setupButton(i)
+}
+setupButton('+')
+setupButton('-')
+setupButton('*')
+setupButton('/')
+setupButton('clear')
