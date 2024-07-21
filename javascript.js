@@ -29,9 +29,11 @@ function operate(num1, operator, num2) {
     }
 }
 
-let firstNumber = 2;
-let operator = "*";
-let secondNumber = 3;
+let firstNumber;
+let operator;
+let secondNumber;
+let opPos; // operator position
+const opRegex = /[+\-*\/]/;
 
 //alert(operate(firstNumber, operator, secondNumber));
 
@@ -39,10 +41,36 @@ const textfield = document.querySelector('#result');
 
 let displayField = ""
 function display(value) {
-    if (displayField.length == 0)
+    if(value == "=") {
+        if(opRegex.test(value)) { // Check incorrect input
+            alert("Missing operator");
+            return;
+        }
+        else {
+            opPos = displayField.search(opRegex);
+            firstNumber = displayField.substring(0, opPos);
+            operator = displayField.charAt(opPos);
+            secondNumber = displayField.substring(opPos + 1);
+            displayField = operate(firstNumber, operator, secondNumber);
+        }
+    }
+    else if(value == "clear") {
+        displayField = ""
+    }
+    else if (displayField.length == 0) {
+        if(opRegex.test(value)) { // Check incorrect input
+            alert("First input must not be an operator");
+            return;
+        }
         displayField = String(value);
-    else
+    }
+    else {
+        if(opRegex.test(value) && opRegex.test(textfield.value)) { // Check incorrect input
+            alert("Cannot have more than 1 operator");
+            return;
+        }
         displayField += String(value);
+    }
     textfield.value = displayField;
 }
 function setupButton(val) {
@@ -56,4 +84,5 @@ setupButton('+')
 setupButton('-')
 setupButton('*')
 setupButton('/')
+setupButton('=')
 setupButton('clear')
