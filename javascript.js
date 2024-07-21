@@ -48,9 +48,9 @@ function display(value) {
         }
         else {
             opPos = displayField.search(opRegex);
-            firstNumber = displayField.substring(0, opPos);
+            firstNumber = Number(displayField.substring(0, opPos));
             operator = displayField.charAt(opPos);
-            secondNumber = displayField.substring(opPos + 1);
+            secondNumber = Number(displayField.substring(opPos + 1));
             displayField = operate(firstNumber, operator, secondNumber);
         }
     }
